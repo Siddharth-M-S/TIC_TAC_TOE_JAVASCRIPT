@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic-Tac-Toe</title>
+    <style>
+        body { background-color: #0a1931 }
+        .container {
+            display: grid; grid-gap: 0.1rem;
+            grid-template-columns: 1fr 1fr 1fr;
+            width: 24rem; margin: auto
+        }
+        .box {
+            height: 7rem; background-color: #185adb;
+            color: #ffc947; font-size: 6rem;
+            text-align: center; cursor: pointer;
+        }
+        .heading { color: #feddbe; text-align: center }
+        .btn {
+            background-color: #ffc947; color: #185adb;
+            border: 0px; padding: 1rem; margin: auto;
+            font-weight: bold; cursor: pointer;
+        }
+        .btn:hover { background-color: #aac947 }
+        .reset-container { text-align: center }
+    </style>
+</head>
+<body>
+    <h1 class="heading">Tic Tac Toe</h1>
+    <h2 class="heading" id="player">Current Player: X</h2>
+    <div class="container" id="container">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <h2 class="heading" id="winner"></h2>
+    <div class="reset-container">
+        <button class="btn" id="reset">RESET</button>
+    </div>
+
+    <script>
+        var currenplayer = 'X';
+        var boxes = document.querySelectorAll('.box');
+        var nextplayer = document.getElementById('player');
+        boxes.forEach(box=>box.addEventListener('click',playerchange));
+        function playerchange()
+        {
+            if(event.target.innerText!='') return;
+            event.target.innerText=currenplayer;
+            if(iswinner()){
+                    let winner= document.getElementById('winner');
+                    winner.innerText='Player  '+currenplayer+'  wins!!  '+'   Hooray!!';
+            }
+           
+            else{
+                    currenplayer=(currenplayer=='X')?'O':'X';
+                nextplayer.innerText='Current Player : '+currenplayer;
+            }
+         if(isdraw())
+            {
+                winner.innerText='Match Drawn';
+                        
+            }
+        
+            // if(currenplayer=='X')
+            // {
+            //         currenplayer='O';
+            // }
+            // else{
+            //     currentplayer='X';
+            // }
+            
+            
+        }
+        var reset = document.getElementById("reset");
+        reset.addEventListener("click", clear);
+        function clear() {
+            winner.innerText = "";
+            currentPlayer = 'X';
+            player.innerText = "Current Player: " + currentPlayer;
+            boxes.forEach(box => box.innerText = "");
+        }
+       
+        function iswinner()
+        {
+            const winPos = ['012', '345', '678', '036', '147', '258', '048', '246'];
+            for(let position of winPos)
+            {
+                let position1= boxes[position[0]].innerText;
+                let position2 = boxes[position[1]].innerText;
+                let position3=boxes[position[2]].innerText;
+                if(position1==currenplayer && position2==currenplayer && position3==currenplayer)
+                {
+                    return true;
+                }
+             
+                
+            }
+            return false;
+        }
+        function isdraw(){
+            let draw = true;
+            for (let box of boxes) {
+                draw = draw && box.innerText != '';
+            }
+            return draw;
+
+
+       
+
+        }
+    </script>
+
+
+
+
